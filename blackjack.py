@@ -16,12 +16,25 @@ def play():
     for i in range (3):
        #initial deal
        deckuse,d1,d2,p1,p2=deal(deckuse)
-       print(deckuse)
-       print(d1,d2,p1,p2)
+      #  print(deckuse)
+      #  print(d1,d2,p1,p2)
+       open=playhand(deckuse,d1,d2,p1,p2)
 
 def playhand(deckuse,d1,d2,p1,p2):
         #assignment of values
-        ace="1"
+        dealhand=[d1,d2]
+        for i in dealhand:
+          if len(i)==3:
+              dealhand[i]=int(10)
+          elif int(i[0])>1:
+              dealhand[i]= int(i[0])
+          elif int(i[0])==1:
+              deahand[i]=int(11)
+
+        print(dealhand)
+
+
+        
         
 
 def deal(deckuse):
