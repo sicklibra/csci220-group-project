@@ -29,7 +29,7 @@ def playhand(deckuse,d1,d2,p1,p2):
           elif int(i[0])>1:
               dealhand[i]= int(i[0])
           elif int(i[0])==1:
-              deahand[i]=int(11)
+              dealhand[i]=int(11)
 
         print(dealhand)
 
