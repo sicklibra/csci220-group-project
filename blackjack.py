@@ -18,45 +18,54 @@ def play():
       deckuse,d1,d2,p1,p2=deal(deckuse)
       #  print(deckuse)
       #  print(d1,d2,p1,p2)
-      playhand(deckuse,d1,d2,p1,p2)
+      setup(deckuse,d1,d2,p1,p2)
 
-def playhand(deckuse,d1,d2,p1,p2):
+def setup(deckuse,d1,d2,p1,p2):
   #assignment of values
   dealertot=0
   playertot=0
   dealhand=[d1,d2]
   playerhand=[p1,p2]
-  test=[]
-  split=True
-  #split test
-  while split==True:
-    for i in playerhand:
-      if len(playerhand)==3:
-        test.append(int(i[0:1]))
-      else:
-        test.append(int(i[0]))
-      if test[0]==test[1]:
-        spl=1
-        while split==1:
-          choice=input('Would you like to split?Y/N')
-          if choice=="Y" or choice=="y":                      
-            #Looking at maybe constructing a new function for split   
-          else:
-              split=False
-         
+  ph2=0
+  ph3=0
+  ph4=0
+  print('The dealers hand is',dealhand)
+  #tests to see if splitable and if user wants to.
+  split=splittest(playerhand)
+  #splits the hand
+  if split==True
+    ph1=[playerhand[0]]
+    hit(ph1, deckuse)
+    split=splittest(ph1)
+    if split==True:
+       ph3=[ph1[1]]
+       ph1=[ph1[0]]
+       hit(ph1,deckuse)
+       split=splittest(ph1)
+       if split==True:
+          ph4=[ph1[1]]
+          ph1=[ph1[0]]
+          hit(ph1)
+    playhand(ph1,deckuse)
+    ph2=playerhand[1]
+    hit(ph2)
+  else:
+    playhand(playerhand,deckuse)
         #generate values of cards
   for i in dealhand:
     i=cardValue(i)
   # gets the numeric value for the card     
-  for i in playhand:
+  #possibly make this it's own function to iterate for splits
+  for i in playerhand:
     i=cardValue(i)
   #initialize boolean statements for the hand
+
+def playhand(hand,deckuse)
   bust=False
-  dealstay=False
   stay=False
   blackjack=False
   #actual bame play
-  while dealstay==False:
+  while stay==False:
      #display hands that have been dealt
     print("The dealers hand is : x",dealhand[:-1])
     print("\n Your hand is: ", playhand)
@@ -69,7 +78,23 @@ def playhand(deckuse,d1,d2,p1,p2):
         blackjack=True
       elif          
 
-        
+def splittest(hand)
+  test=[]
+    #split test
+  for i in hand:
+    if len(i)==3:
+      test.append(int(i[0:1]))
+    else:
+      test.append(int(i[0]))
+    if test[0]==test[1]:
+      choice=input('Would you like to split?Y/N')
+      if choice=="Y" or choice=="y":
+         return True
+      else:
+        return False
+  
+
+
 def cardValue(card):
     if len(card)==3:
         return 10
@@ -78,8 +103,9 @@ def cardValue(card):
     elif int(card[0])==1:
         return "ace"
 
-def hit(deckuse):
+def hit(hand,deckuse):
     hitcrd=random.choice(deckuse)
+    hand.append(hitcrd)
     place=deckuse.index(hitcrd)
     del(deckuse[place])
     
