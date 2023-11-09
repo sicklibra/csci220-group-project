@@ -8,7 +8,7 @@
   the deck will be referenced by place and suit in a list that will be manipulated for actual game play that will be conducted via graphic interface."""
 
 import random
-
+import math
 def play():
     deckmain= ["1d", "1h", "1s", "1c", "2d", "2h", "2s", "2c", '3d', '3h', '3s', '3c', '4d', '4h', '4s', '4c', '5d', '5h', '5s', '5c', '6d', '6h', '6s', '6c', '7d', '7h', '7s', '7c', '8d', '8h', '8s', '8c', '9d', '9h', '9s', '9c', '10d' ,'10h', '10s', '10c', '11d', '11h', '11s', '11c', '12d', '12h', '12s', '12c', '13d', '13h', '13s', '13c']
     deckuse=deckmain
@@ -22,19 +22,60 @@ def play():
 
 def playhand(deckuse,d1,d2,p1,p2):
         #assignment of values
+        dealertot=0
+        playertot=0
         dealhand=[d1,d2]
+        playerhand=[p1,p2]
+        test=[]
+        split=True
+        #split test
+        while split==True:
+          for i in playerhand:
+              if len(playerhand)==3:
+                  test.append(int(i[0:1]))
+              else:
+                  test.append(int(i[0]))
+          if test[0]==test[1]:
+              spl=1
+              while split==1:
+                  choice=input('Would you like to split?Y/N')
+                  if choice=="Y" or choice=="y":
+                      
+                  
+          else:
+              split=False
+         
+        #generate values of cards
         for i in dealhand:
-          if len(i)==3:
-              dealhand[i]=int(10)
-          elif int(i[0])>1:
-              dealhand[i]= int(i[0])
-          elif int(i[0])==1:
-              dealhand[i]=int(11)
-
-        print(dealhand)
-
+            i=cardValue(i)
+        
+        for i in playhand:
+            i=cardValue(i)
+        bust=False
+        dealstay=False
+        stay=False
+        blackjack=False
+        while dealstay==False:
+          #display hands that have been dealt
+          print("The dealers hand is : x",dealhand[:-1])
+          print("\n Your hand is: ", playerhand)
+          while stay==False or bust==False or blackjack==False:
+            if math.sum(playerhand)==21
 
         
+def cardValue(card):
+    if len(card)==3:
+        return 10
+    elif int(card[0])>1:
+        return card[0]
+    elif int(card[0])==1:
+        return "ace"
+
+def hit(deckuse):
+    hitcrd=random.choice(deckuse)
+    place=deckuse.index(hitcrd)
+    del(deckuse[place])
+    
         
 
 def deal(deckuse):
