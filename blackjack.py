@@ -14,53 +14,60 @@ def play():
     deckuse=deckmain
     #this will contain the whole game
     for i in range (3):
-       #initial deal
-       deckuse,d1,d2,p1,p2=deal(deckuse)
+      #initial deal
+      deckuse,d1,d2,p1,p2=deal(deckuse)
       #  print(deckuse)
       #  print(d1,d2,p1,p2)
-       open=playhand(deckuse,d1,d2,p1,p2)
+      playhand(deckuse,d1,d2,p1,p2)
 
 def playhand(deckuse,d1,d2,p1,p2):
-        #assignment of values
-        dealertot=0
-        playertot=0
-        dealhand=[d1,d2]
-        playerhand=[p1,p2]
-        test=[]
-        split=True
-        #split test
-        while split==True:
-          for i in playerhand:
-              if len(playerhand)==3:
-                  test.append(int(i[0:1]))
-              else:
-                  test.append(int(i[0]))
-          if test[0]==test[1]:
-              spl=1
-              while split==1:
-                  choice=input('Would you like to split?Y/N')
-                  if choice=="Y" or choice=="y":
-                      
-                  
+  #assignment of values
+  dealertot=0
+  playertot=0
+  dealhand=[d1,d2]
+  playerhand=[p1,p2]
+  test=[]
+  split=True
+  #split test
+  while split==True:
+    for i in playerhand:
+      if len(playerhand)==3:
+        test.append(int(i[0:1]))
+      else:
+        test.append(int(i[0]))
+      if test[0]==test[1]:
+        spl=1
+        while split==1:
+          choice=input('Would you like to split?Y/N')
+          if choice=="Y" or choice=="y":                      
+            #Looking at maybe constructing a new function for split   
           else:
               split=False
          
         #generate values of cards
-        for i in dealhand:
-            i=cardValue(i)
-        
-        for i in playhand:
-            i=cardValue(i)
-        bust=False
-        dealstay=False
-        stay=False
-        blackjack=False
-        while dealstay==False:
-          #display hands that have been dealt
-          print("The dealers hand is : x",dealhand[:-1])
-          print("\n Your hand is: ", playerhand)
-          while stay==False or bust==False or blackjack==False:
-            if math.sum(playerhand)==21
+  for i in dealhand:
+    i=cardValue(i)
+  # gets the numeric value for the card     
+  for i in playhand:
+    i=cardValue(i)
+  #initialize boolean statements for the hand
+  bust=False
+  dealstay=False
+  stay=False
+  blackjack=False
+  #actual bame play
+  while dealstay==False:
+     #display hands that have been dealt
+    print("The dealers hand is : x",dealhand[:-1])
+    print("\n Your hand is: ", playhand)
+    while stay==False or bust==False or blackjack==False:
+      if playhand[0]=="ace" and playhand[1]!='ace':
+         playhand[0]=11
+      elif playhand[1]!='ace' and playhand[1]=='ace':
+         playhand[1]=11
+      if math.sum(playhand)==21:
+        blackjack=True
+      elif          
 
         
 def cardValue(card):
