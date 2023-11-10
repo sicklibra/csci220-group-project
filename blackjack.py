@@ -47,8 +47,17 @@ def setup(deckuse,d1,d2,p1,p2):
           ph1=[ph1[0]]
           hit(ph1)
     playhand(ph1,deckuse)
-    ph2=playerhand[1]
+    ph2=[playerhand[1]]
     hit(ph2)
+    split=splittest(ph2)
+    if split==True and ph3==0:
+       ph2=[ph2[0]]
+       ph3=[ph2[1]]
+    elif split==True and ph3!=0:
+       ph2=[ph2[0]]
+       ph4=[ph2[1]] 
+    hit(ph2,deckuse)     
+       
   else:
     playhand(playerhand,deckuse)
         #generate values of cards
