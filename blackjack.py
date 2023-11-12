@@ -26,68 +26,55 @@ def setup(deckuse,d1,d2,p1,p2):
   playertot=0
   dealhand=[d1,d2]
   playerhand=[p1,p2]
-  ph2=0
-  ph3=0
-  ph4=0
+  ph1=playerhand
+  ph2=[]
+  ph3=[]
+  ph4=[]
+  splithands=[ph1,ph2,ph3,ph4]
+  handnum=0
   print('The dealers hand is',dealhand)
-  #tests to see if splitable and if user wants to.
-  split=splittest(playerhand)
+  print("Your hand is: ", playerhand)
   #splits the hand
-  if split==True
-    ph1=[playerhand[0]]
-    hit(ph1, deckuse)
-    split=splittest(ph1)
-    if split==True:
-       ph3=[ph1[1]]
-       ph1=[ph1[0]]
-       hit(ph1,deckuse)
-       split=splittest(ph1)
-       if split==True:
-          ph4=[ph1[1]]
-          ph1=[ph1[0]]
-          hit(ph1)
-    playhand(ph1,deckuse)
-    ph2=[playerhand[1]]
-    hit(ph2)
-    split=splittest(ph2)
-    if split==True and ph3==0:
-       ph2=[ph2[0]]
-       ph3=[ph2[1]]
-    elif split==True and ph3!=0:
-       ph2=[ph2[0]]
-       ph4=[ph2[1]] 
-    hit(ph2,deckuse)     
-       
+  handnum=splitTree(splithands, deckuse, handnum)
+  playhand(ph1, deckuse, dealhand)
+  if ph2!=[]:
+     handnum=splitTree(splithands, deckuse, handnum)
+     playhand(ph2 deckuse, dealhand)
+  if ph3!=[]:
+     handnum=splitTree(splithands, deckuse, handnum)
+     playhand(ph2 deckuse, dealhand)
+  if ph4!=[]:
+    #im only allowing exact match cards to split(not all 10's)
+     playhand(ph2 deckuse, dealhand)
+  #if hand can't be split, just play the hand.      
   else:
-    playhand(playerhand,deckuse)
+    playhand(playerhand,deckuse, dealhand)
         #generate values of cards
-  for i in dealhand:
-    i=cardValue(i)
-  # gets the numeric value for the card     
-  #possibly make this it's own function to iterate for splits
-  for i in playerhand:
-    i=cardValue(i)
-  #initialize boolean statements for the hand
+  # for i in dealhand:
+  #   i=cardValue(i)
+  # # gets the numeric value for the card     
+  # #possibly make this it's own function to iterate for splits
+  # for i in playerhand:
+  #   i=cardValue(i)
+  # #initialize boolean statements for the hand
 
-def playhand(hand,deckuse)
+def playhand(hand, deckuse, dealhand):
+  #set conditions that would cause end of hand activity
   bust=False
   stay=False
   blackjack=False
+  handtotal=0
+  dhtot=cardValue(dealhand)
   #actual bame play
-  while stay==False:
-     #display hands that have been dealt
+  while stay==False and bust==False and blackjack== False:
+     #display hands that have been 
     print("The dealers hand is : x",dealhand[:-1])
-    print("\n Your hand is: ", playhand)
-    while stay==False or bust==False or blackjack==False:
-      if playhand[0]=="ace" and playhand[1]!='ace':
-         playhand[0]=11
-      elif playhand[1]!='ace' and playhand[1]=='ace':
-         playhand[1]=11
-      if math.sum(playhand)==21:
-        blackjack=True
-      elif          
+    print("\n Your hand is: ", hand)
+    if hand.count('ace')==1:
+       hand[hand.index('ace')]=11
+       
 
-def splittest(hand)
+def splittest(hand):
   test=[]
     #split test
   for i in hand:
@@ -101,8 +88,17 @@ def splittest(hand)
          return True
       else:
         return False
-  
 
+
+def splitTree(splithands, deckuse, handnum):
+  split=splithands[handnum]
+  if split==True:
+     splithands[handnum+1]=[splithands[handnum[1]]]
+     splithands[handnum]=[splithands[handnum[0]]]
+     hit(splithands[handnum])
+     return handnum+1
+        
+           
 
 def cardValue(card):
     if len(card)==3:
@@ -137,8 +133,7 @@ def deal(deckuse):
        place=deckuse.index(p2)
        del(deckuse[place])
 
-       return deckuse,d1,d2,p1,p2
-       
+       return deckuse,d1,d2,p1,p2       
 
 
 def main():
@@ -173,3 +168,41 @@ def main():
                  
 
 main()
+
+
+#different ways ive tried running the split tree function
+
+  # split==True
+  # counter=0
+  # #variable to account for multiple splits on same iteration.
+  # multi=1
+  # # for i in range(splithands):
+  #   #tests to see if splitable and if user wants to.
+     
+  # while split==True:
+  #   #tests and prompts if the hand can and will be split
+  #   split=splittest(splithands[counter])
+  #   #will take the second card of the current hand,and assign it to first card slot of next hand
+  #   splithands[multi]=[splithands[counter[1]]]
+  #   #resets the first hand with a single card(the first in the current two card list.)
+  #   splithands[counter]=splithands[counter[0]]
+  #   #adds card to the new first hand
+  #   hit(splithands[counter], dealhand)
+  #   #hand to be tested as it works down the chain:
+  #   recheck=splittest(splithands[counter])
+  #   #if new hand can be split, it sends the next hand to be changed to the target of the split 
+  #   if recheck==True:
+  #      multi+=1
+  #   #moves up to the next hand in the list if cant resplit first hand. 
+  #   else:
+  #      counter+=1
+  # if hand3==0:
+  #   hand3=[hand2[1]]
+  #   hand2=[hand2[0]]
+  #   hit(hand2, deckuse)
+  #   return hand2,hand3,hand4
+  # if hand4==0:
+  #    hand4=[hand3[1]]
+  #    hand3=[hand3[0]]
+  #    hit(hand3, deckuse)
+  #    return hand2, hand3, hand4  
