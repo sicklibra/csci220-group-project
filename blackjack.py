@@ -32,47 +32,93 @@ def setup(deckuse,d1,d2,p1,p2):
   ph4=[]
   splithands=[ph1,ph2,ph3,ph4]
   handnum=0
-  print('The dealers hand is',dealhand)
+  print('The dealers hand is',dealhand[1])
   print("Your hand is: ", playerhand)
+  blackjack=dealBJ(playerhand,dealhand)
   #splits the hand
-  handnum=splitTree(splithands, deckuse, handnum)
-  playhand(ph1, deckuse, dealhand)
-  if ph2!=[]:
-     handnum=splitTree(splithands, deckuse, handnum)
-     playhand(ph2 deckuse, dealhand)
-  if ph3!=[]:
-     handnum=splitTree(splithands, deckuse, handnum)
-     playhand(ph2 deckuse, dealhand)
-  if ph4!=[]:
-    #im only allowing exact match cards to split(not all 10's)
-     playhand(ph2 deckuse, dealhand)
-  #if hand can't be split, just play the hand.      
-  else:
-    playhand(playerhand,deckuse, dealhand)
-        #generate values of cards
-  # for i in dealhand:
-  #   i=cardValue(i)
-  # # gets the numeric value for the card     
-  # #possibly make this it's own function to iterate for splits
-  # for i in playerhand:
-  #   i=cardValue(i)
-  # #initialize boolean statements for the hand
+  if blackjack==False:
+    handnum=splitTree(splithands, deckuse, handnum)
+    playhand(ph1, deckuse, dealhand)
+    if ph2!=[]:
+      handnum=splitTree(splithands, deckuse, handnum)
+      playhand(ph2, deckuse, dealhand)
+    if ph3!=[]:
+      handnum=splitTree(splithands, deckuse, handnum)
+      playhand(ph3, deckuse, dealhand)
+    if ph4!=[]:
+      #im only allowing exact match cards to split(not all 10's)
+      hit(ph4)
+      playhand(ph4, deckuse, dealhand)
+    #if hand can't be split, just play the hand.      
+    else:
+      playhand(playerhand,deckuse, dealhand)
+
+    dealerPlay(dealhand, deckuse)
 
 def playhand(hand, deckuse, dealhand):
   #set conditions that would cause end of hand activity
-  bust=False
-  stay=False
-  blackjack=False
-  handtotal=0
-  dhtot=cardValue(dealhand)
-  #actual bame play
-  while stay==False and bust==False and blackjack== False:
-     #display hands that have been 
-    print("The dealers hand is : x",dealhand[:-1])
-    print("\n Your hand is: ", hand)
-    if hand.count('ace')==1:
-       hand[hand.index('ace')]=11
+  stay=False 
+  #actual Game play
+  while stay==False:
+     #display hands that have been
+    handvalues=hand 
+    cardValue(handvalues)
+    handtotal=0
+    for i in handvalues:
+      handtotal+=i
+    #test for Blackjack
+    if len(hand)==2 and handtotal==21:
+      print('BLACK JACK!!!')
+      break
+    #ace behavior.
+    if handtotal>21 and handvalues.count(11)>=1:
+       acepos=handvalues.index(11)
+       handvalues.replace(acepos, 1)
+    if handtotal>21:
+       print('Bust! Better luck next time')
+       break
+    if handtotal==21:
+      print("21! Good Job!")
+      break
        
+    #The dealers hand is always played with the first card face down. 
+    print("The dealers hand is : x",dealhand[1])
+    print("\n Your hand is: ", hand, handtotal)
+    #hit check
+    hithand=input("Would you like to hit?Y/N")
+    if hithand=='y' or hithand=="Y":
+       hit(hand, deckuse)
+    else:
+       stay=True
+    
+def dealerPlay(dealhand, deckuse):
+  stay=False 
+  
+  #actual bame play
+  while stay==False:
+    handtotal=0
+    handvalues=dealhand
+    cardValue(handvalues)
+     #display hands that have been 
+    for i in handvalues:
+      handtotal+=i
+    #test for Blackjack
+    if len(dealhand)==2 and handtotal==21:
+      print('BLACK JACK!!!')
+      break
+    #ace behavior.
+    if handtotal>21 and handvalues.count(11)>=1:
+       acepos=handvalues.index(11)
+       handvalues.replace(acepos, 1)
+    if handtotal>21:
+       print('Dealer busts Congratulations')
+       break
+    #hit check
+    if handtotal<=17:
+       hit(dealhand, deckuse)
+    else:
+       stay=True
+   
 
 def splittest(hand):
   test=[]
@@ -97,16 +143,35 @@ def splitTree(splithands, deckuse, handnum):
      splithands[handnum]=[splithands[handnum[0]]]
      hit(splithands[handnum])
      return handnum+1
-        
-           
 
-def cardValue(card):
-    if len(card)==3:
-        return 10
-    elif int(card[0])>1:
-        return card[0]
-    elif int(card[0])==1:
-        return "ace"
+
+def dealBJ(dealer,player):
+  dealervalues=dealer
+  cardValue(dealervalues)
+  playervalues=player
+  cardValue(playervalues)
+  dealertot=0
+  playertot=0
+  if dealervalues[1]==11:
+      for i in dealervalues:
+         dealertot+=i
+      for i in playervalues:
+         playertot+=i
+      if dealertot==21 and playertot<21:
+         print('Dealer Blackjack. Bad luck')
+      elif dealertot==21 and playertot==21:
+         print('Push!') 
+  else:
+     return False        
+
+def cardValue(hand):
+    for i in hand:
+      if len(i)==3:
+        i=10
+      elif int(i[0])>1:
+        i=int(i[0])
+      elif int(i[0])==1:
+        i=11
 
 def hit(hand,deckuse):
     hitcrd=random.choice(deckuse)
