@@ -65,7 +65,7 @@ def playhand(hand, deckuse, dealhand):
     cardValue(handvalues)
     handtotal=0
     for i in handvalues:
-      handtotal+=i
+      handtotal+=int(i)
     #test for Blackjack
     if len(hand)==2 and handtotal==21:
       print('BLACK JACK!!!')
@@ -128,11 +128,12 @@ def splittest(hand):
       test.append(int(i[0:1]))
     else:
       test.append(int(i[0]))
-    if test[0]==test[1]:
-      choice=input('Would you like to split?Y/N')
-      if choice=="Y" or choice=="y":
-         return True
-      else:
+      
+  if test[0]==test[1]:
+    choice=input('Would you like to split?Y/N')
+    if choice=="Y" or choice=="y":
+        return True
+    else:
         return False
 
 
@@ -162,16 +163,23 @@ def dealBJ(dealer,player):
       elif dealertot==21 and playertot==21:
          print('Push!') 
   else:
-     return False        
+     return False  
 
+
+
+########!!!!!! this function is where the program is breaking down
+#for some reason it is not converting the cards in hand to values.
+#it is also running it for the player hand, dealer hand, then playerhand again and 
+#not altering the list in any pass.
 def cardValue(hand):
     for i in hand:
       if len(i)==3:
-        i=10
+        i=(10)
       elif int(i[0])>1:
-        i=int(i[0])
+        i=(i[0])
       elif int(i[0])==1:
         i=11
+    print( hand)
 
 def hit(hand,deckuse):
     hitcrd=random.choice(deckuse)
