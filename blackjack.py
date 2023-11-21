@@ -118,7 +118,7 @@ def dealerPlay(dealhand, deckuse):
        hit(dealhand, deckuse)
     else:
        stay=True
-   
+
 
 def splittest(hand):
   test=[]
