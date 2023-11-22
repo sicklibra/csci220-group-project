@@ -92,9 +92,8 @@ def playhand(hand, deckuse, dealhand):
        stay=True
     
 def dealerPlay(dealhand, deckuse):
-  stay=False 
-  
-  #actual bame play
+  stay=False   
+  #actual game play
   while stay==False:
     handtotal=0
     handvalues=dealhand
@@ -172,7 +171,9 @@ def dealBJ(dealer,player):
 #it is also running it for the player hand, dealer hand, then playerhand again and 
 #not altering the list in any pass.
 def cardValue(hand):
+    #iterates each card in the hand
     for i in hand:
+      #should re-assign list item in hand to the appropriate integer but for some reason won't
       if len(i)==3:
         i=(10)
       elif int(i[0])>1:
