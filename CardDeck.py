@@ -83,7 +83,7 @@ heart12=PhotoImage(file="12_of_hearts.png")
 heart13=PhotoImage(file="13_of_hearts.png")
 heart14=PhotoImage(file="14_of_hearts.png")
 
-#all 14 diamonds
+#all 13 diamonds
 diamond2=PhotoImage(file="2_of_diamonds.png")
 diamond3=PhotoImage(file="3_of_diamonds.png")
 diamond4=PhotoImage(file="4_of_diamonds.png")
@@ -98,7 +98,7 @@ diamond12=PhotoImage(file="12_of_diamonds.png")
 diamond13=PhotoImage(file="13_of_diamonds.png")
 diamond14=PhotoImage(file="14_of_diamonds.png")
 
-#all 14 spades
+#all 13 spades
 spade2=PhotoImage(file="2_of_spades.png")
 spade3=PhotoImage(file="3_of_spades.png")
 spade4=PhotoImage(file="4_of_spades.png")
@@ -113,7 +113,7 @@ spade12=PhotoImage(file="12_of_spades.png")
 spade13=PhotoImage(file="13_of_spades.png")
 spade14=PhotoImage(file="14_of_spades.png")
 
-#all 14 clubs
+#all 13 clubs
 club2=PhotoImage(file="2_of_clubs.png")
 club3=PhotoImage(file="3_of_clubs.png")
 club4=PhotoImage(file="4_of_clubs.png")
