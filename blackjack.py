@@ -137,11 +137,14 @@ def splittest(hand):
 
 
 def splitTree(splithands, deckuse, handnum):
+  
+  #determines if cards are same value so they can be split
   split=splithands[handnum]
   if split==True:
      splithands[handnum+1]=[splithands[handnum[1]]]
      splithands[handnum]=[splithands[handnum[0]]]
-     hit(splithands[handnum])
+     #automatically hits the first hand
+     hit(splithands[handnum], deckuse)
      return handnum+1
 
 
@@ -152,9 +155,12 @@ def dealBJ(dealer,player):
   cardValue(playervalues)
   dealertot=0
   playertot=0
+  #only can be blackjack out of the gate if dealer is showing an ace.
   if dealervalues[1]==11:
+      #calculates dealer total to verify if dealer has blackjack 
       for i in dealervalues:
          dealertot+=i
+      #calculates players hand if both have blackjack the hand is a push
       for i in playervalues:
          playertot+=i
       if dealertot==21 and playertot<21:
